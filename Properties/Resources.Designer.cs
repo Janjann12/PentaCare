@@ -143,6 +143,16 @@ namespace PentaCare.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Copy_of_CCP___SYSTEM__31_ {
+            get {
+                object obj = ResourceManager.GetObject("Copy of CCP - SYSTEM (31)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Copy_of_CCP___SYSTEM__4_ {
             get {
                 object obj = ResourceManager.GetObject("Copy of CCP - SYSTEM (4)", resourceCulture);
