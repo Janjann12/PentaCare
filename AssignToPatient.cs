@@ -102,5 +102,10 @@ namespace PentaCare
             this.Hide();
 
         }
+
+        private void AssignToPatient_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

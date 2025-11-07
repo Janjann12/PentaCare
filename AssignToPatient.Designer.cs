@@ -41,9 +41,9 @@
             // assignBtn
             // 
             assignBtn.BackColor = Color.Transparent;
-            assignBtn.Location = new Point(250, 819);
+            assignBtn.Location = new Point(244, 812);
             assignBtn.Name = "assignBtn";
-            assignBtn.Size = new Size(346, 68);
+            assignBtn.Size = new Size(365, 75);
             assignBtn.TabIndex = 0;
             assignBtn.Click += assignBtn_Click;
             // 
@@ -70,29 +70,29 @@
             // pID
             // 
             pID.BorderStyle = BorderStyle.None;
-            pID.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pID.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pID.Location = new Point(936, 350);
             pID.Name = "pID";
-            pID.Size = new Size(392, 54);
+            pID.Size = new Size(392, 44);
             pID.TabIndex = 3;
             // 
             // pName
             // 
             pName.BorderStyle = BorderStyle.None;
-            pName.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pName.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pName.Location = new Point(1004, 456);
             pName.Name = "pName";
-            pName.Size = new Size(392, 54);
+            pName.Size = new Size(392, 44);
             pName.TabIndex = 4;
             // 
             // doctor
             // 
-            doctor.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            doctor.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             doctor.FormattingEnabled = true;
-            doctor.Items.AddRange(new object[] { "Dr. Amelia Santos", "", "Dr. Benjamin Cruz", "", "Dr. Carla Mendoza", "", "Dr. Daniel Ramos", "", "Dr. Erica Lim", "", "Dr. Francis Tan", "", "Dr. Grace Navarro", "", "Dr. Henry Dela Cruz", "", "Dr. Isabel Torres", "", "Dr. Joseph Reyes" });
+            doctor.Items.AddRange(new object[] { "Dr. Amelia Santos", "Dr. Benjamin Cruz", "Dr. Carla Mendoza", "Dr. Daniel Ramos", "Dr. Erica Lim", "Dr. Francis Tan", "Dr. Grace Navarro", "Dr. Henry Dela Cruz", "Dr. Isabel Torres", "Dr. Joseph Reyes" });
             doctor.Location = new Point(1029, 568);
             doctor.Name = "doctor";
-            doctor.Size = new Size(299, 39);
+            doctor.Size = new Size(299, 45);
             doctor.TabIndex = 5;
             // 
             // backBtn
@@ -119,7 +119,9 @@
             Controls.Add(searchBox);
             Controls.Add(assignBtn);
             Name = "AssignToPatient";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AssignToPatient";
+            Load += AssignToPatient_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -54,7 +54,7 @@
             // 
             pAge.BorderStyle = BorderStyle.None;
             pAge.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            pAge.Location = new Point(460, 415);
+            pAge.Location = new Point(460, 410);
             pAge.Name = "pAge";
             pAge.Size = new Size(206, 27);
             pAge.TabIndex = 1;
@@ -94,7 +94,7 @@
             pGender.ForeColor = Color.Black;
             pGender.FormattingEnabled = true;
             pGender.Items.AddRange(new object[] { "Male", "Female", "Others" });
-            pGender.Location = new Point(907, 409);
+            pGender.Location = new Point(898, 407);
             pGender.Name = "pGender";
             pGender.Size = new Size(288, 33);
             pGender.TabIndex = 7;
@@ -131,7 +131,7 @@
             pStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             pStatus.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pStatus.FormattingEnabled = true;
-            pStatus.Items.AddRange(new object[] { "Admited", "Under Observation" });
+            pStatus.Items.AddRange(new object[] { "Admitted", "Under Observation" });
             pStatus.Location = new Point(1321, 553);
             pStatus.Name = "pStatus";
             pStatus.Size = new Size(281, 33);
@@ -155,6 +155,7 @@
             Controls.Add(pAge);
             Controls.Add(pName);
             Name = "AddPatient";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddPatient";
             Load += AddPatient_Load;
             ResumeLayout(false);

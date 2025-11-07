@@ -28,26 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            button1 = new Button();
             SuspendLayout();
             // 
-            // panel1
+            // button1
             // 
-            panel1.BackColor = Color.Transparent;
-            panel1.Location = new Point(72, 622);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(250, 55);
-            panel1.TabIndex = 0;
-            panel1.Click += panel1_Click;
+            button1.Location = new Point(303, 278);
+            button1.Name = "button1";
+            button1.Size = new Size(226, 50);
+            button1.TabIndex = 0;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.Copy_of_CCP___SYSTEM;
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1129, 710);
-            Controls.Add(panel1);
+            ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Name = "Form2";
             Text = "Form2";
             ResumeLayout(false);
@@ -55,6 +54,6 @@
 
         #endregion
 
-        private Panel panel1;
+        private Button button1;
     }
 }

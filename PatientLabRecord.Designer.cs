@@ -34,9 +34,7 @@
             room = new Label();
             doc = new Label();
             textBox1 = new TextBox();
-            panel2 = new Panel();
             viewbtn = new Panel();
-            updbtn = new Panel();
             SuspendLayout();
             // 
             // panel1
@@ -92,32 +90,14 @@
             textBox1.Size = new Size(655, 36);
             textBox1.TabIndex = 5;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.Transparent;
-            panel2.Location = new Point(129, 915);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(266, 73);
-            panel2.TabIndex = 7;
-            panel2.Click += panel2_Click;
-            // 
             // viewbtn
             // 
             viewbtn.BackColor = Color.Transparent;
-            viewbtn.Location = new Point(734, 914);
+            viewbtn.Location = new Point(466, 908);
             viewbtn.Name = "viewbtn";
-            viewbtn.Size = new Size(171, 74);
+            viewbtn.Size = new Size(171, 81);
             viewbtn.TabIndex = 8;
             viewbtn.Click += viewbtn_Click;
-            // 
-            // updbtn
-            // 
-            updbtn.BackColor = Color.Transparent;
-            updbtn.Location = new Point(935, 914);
-            updbtn.Name = "updbtn";
-            updbtn.Size = new Size(178, 74);
-            updbtn.TabIndex = 9;
-            updbtn.Click += updbtn_Click;
             // 
             // PatientLabRecord
             // 
@@ -126,9 +106,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1902, 1033);
-            Controls.Add(updbtn);
             Controls.Add(viewbtn);
-            Controls.Add(panel2);
             Controls.Add(textBox1);
             Controls.Add(doc);
             Controls.Add(room);
@@ -148,8 +126,6 @@
         private Label room;
         private Label doc;
         private TextBox textBox1;
-        private Panel panel2;
         private Panel viewbtn;
-        private Panel updbtn;
     }
 }

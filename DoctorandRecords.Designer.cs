@@ -32,6 +32,12 @@
             docRecords = new DataGridView();
             dataGridView1 = new DataGridView();
             assignBtn = new Panel();
+            addDocBtn = new Panel();
+            editBtn = new Panel();
+            removeBtn = new Panel();
+            cmbSpecialty = new ComboBox();
+            searchTxt = new TextBox();
+            btnSearch = new Panel();
             ((System.ComponentModel.ISupportInitialize)docRecords).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -58,11 +64,73 @@
             // assignBtn
             // 
             assignBtn.BackColor = Color.Transparent;
-            assignBtn.Location = new Point(988, 936);
+            assignBtn.Location = new Point(988, 932);
             assignBtn.Name = "assignBtn";
-            assignBtn.Size = new Size(298, 52);
+            assignBtn.Size = new Size(298, 56);
             assignBtn.TabIndex = 2;
             assignBtn.Click += assignBtn_Click;
+            // 
+            // addDocBtn
+            // 
+            addDocBtn.AccessibleDescription = "";
+            addDocBtn.BackColor = Color.Transparent;
+            addDocBtn.Location = new Point(131, 932);
+            addDocBtn.Name = "addDocBtn";
+            addDocBtn.Size = new Size(355, 55);
+            addDocBtn.TabIndex = 3;
+            addDocBtn.Click += addDocBtn_Click_1;
+            // 
+            // editBtn
+            // 
+            editBtn.BackColor = Color.Transparent;
+            editBtn.Location = new Point(518, 931);
+            editBtn.Name = "editBtn";
+            editBtn.Size = new Size(163, 57);
+            editBtn.TabIndex = 4;
+            editBtn.Click += editBtn_Click;
+            // 
+            // removeBtn
+            // 
+            removeBtn.BackColor = Color.Transparent;
+            removeBtn.Location = new Point(708, 931);
+            removeBtn.Name = "removeBtn";
+            removeBtn.Size = new Size(213, 59);
+            removeBtn.TabIndex = 5;
+            removeBtn.Click += removeBtn_Click;
+            removeBtn.Paint += removeBtn_Paint;
+            // 
+            // cmbSpecialty
+            // 
+            cmbSpecialty.BackColor = Color.White;
+            cmbSpecialty.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSpecialty.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbSpecialty.FormattingEnabled = true;
+            cmbSpecialty.Items.AddRange(new object[] { "All", "Cardiology", "Neurology", "Pediatrics", "Orthopedics", "Dermatology", "General Surgery", "Obstetrics and Gynecology", "Psychiatry", "Internal Medicine", "Ophthalmology" });
+            cmbSpecialty.Location = new Point(1447, 251);
+            cmbSpecialty.Name = "cmbSpecialty";
+            cmbSpecialty.Size = new Size(315, 39);
+            cmbSpecialty.TabIndex = 6;
+            cmbSpecialty.SelectedIndexChanged += cmbSpecialty_SelectedIndexChanged;
+            // 
+            // searchTxt
+            // 
+            searchTxt.BorderStyle = BorderStyle.None;
+            searchTxt.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            searchTxt.Location = new Point(179, 237);
+            searchTxt.Name = "searchTxt";
+            searchTxt.PlaceholderText = "Search by Name, Doctor ID...";
+            searchTxt.Size = new Size(1090, 36);
+            searchTxt.TabIndex = 7;
+            searchTxt.TextChanged += textBox1_TextChanged;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.Transparent;
+            btnSearch.Location = new Point(1279, 223);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(93, 67);
+            btnSearch.TabIndex = 8;
+            btnSearch.Click += btnSearch_Click;
             // 
             // DoctorandRecords
             // 
@@ -71,6 +139,12 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1902, 1033);
+            Controls.Add(btnSearch);
+            Controls.Add(searchTxt);
+            Controls.Add(cmbSpecialty);
+            Controls.Add(removeBtn);
+            Controls.Add(editBtn);
+            Controls.Add(addDocBtn);
             Controls.Add(assignBtn);
             Controls.Add(dataGridView1);
             Controls.Add(docRecords);
@@ -81,6 +155,7 @@
             ((System.ComponentModel.ISupportInitialize)docRecords).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -88,5 +163,11 @@
         private DataGridView docRecords;
         private DataGridView dataGridView1;
         private Panel assignBtn;
+        private Panel addDocBtn;
+        private Panel editBtn;
+        private Panel removeBtn;
+        private ComboBox cmbSpecialty;
+        private TextBox searchTxt;
+        private Panel btnSearch;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdmissionDischarge));
             panel1 = new Panel();
             fileSystemWatcher1 = new FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
@@ -36,7 +37,7 @@
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
-            panel1.Location = new Point(1545, 956);
+            panel1.Location = new Point(1537, 920);
             panel1.Name = "panel1";
             panel1.Size = new Size(247, 75);
             panel1.TabIndex = 0;
@@ -51,7 +52,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.Copy_of_CCP___SYSTEM__4_;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1902, 1033);
             Controls.Add(panel1);

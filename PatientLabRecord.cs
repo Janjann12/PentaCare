@@ -84,21 +84,11 @@ namespace PentaCare
             form.Show();
         }
 
-        private void panel2_Click(object sender, EventArgs e)
-        {
-            AssignLabTest labtest = new AssignLabTest(patientID, patientName, doctorName, roomNo);
-            labtest.Show();
-            this.Hide();
-        }
+        
 
 
 
-        private void updbtn_Click(object sender, EventArgs e)
-        {
-            Update update = new Update(patientID, patientName, doctorName, roomNo);
-            update.Show();
-            this.Hide();
-        }
+        
 
         private void viewbtn_Click(object sender, EventArgs e)
         {

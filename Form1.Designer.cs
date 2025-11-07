@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridView1 = new DataGridView();
             textBox1 = new TextBox();
             panel1 = new Panel();
             addPatient = new Panel();
             dischargeBtn = new Panel();
+            editBtn = new Panel();
+            deleteBtn = new Panel();
+            cmbGender = new ComboBox();
+            cmbStatus = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -83,13 +88,59 @@
             dischargeBtn.TabIndex = 4;
             dischargeBtn.Click += dischargeBtn_Click;
             // 
+            // editBtn
+            // 
+            editBtn.BackColor = Color.Transparent;
+            editBtn.Location = new Point(528, 913);
+            editBtn.Name = "editBtn";
+            editBtn.Size = new Size(185, 78);
+            editBtn.TabIndex = 5;
+            editBtn.Click += editBtn_Click;
+            // 
+            // deleteBtn
+            // 
+            deleteBtn.BackColor = Color.Transparent;
+            deleteBtn.Location = new Point(1044, 913);
+            deleteBtn.Name = "deleteBtn";
+            deleteBtn.Size = new Size(247, 76);
+            deleteBtn.TabIndex = 6;
+            deleteBtn.Click += deleteBtn_Click;
+            // 
+            // cmbGender
+            // 
+            cmbGender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGender.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbGender.FormattingEnabled = true;
+            cmbGender.Items.AddRange(new object[] { "All", "Male", "Female", "Others" });
+            cmbGender.Location = new Point(1044, 251);
+            cmbGender.Name = "cmbGender";
+            cmbGender.Size = new Size(311, 36);
+            cmbGender.TabIndex = 7;
+            cmbGender.SelectedIndexChanged += cmbGender_SelectedIndexChanged;
+            // 
+            // cmbStatus
+            // 
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbStatus.FormattingEnabled = true;
+            cmbStatus.Items.AddRange(new object[] { "All", "Admitted", "Under Observation", "Discharged" });
+            cmbStatus.Location = new Point(1446, 251);
+            cmbStatus.Name = "cmbStatus";
+            cmbStatus.Size = new Size(311, 36);
+            cmbStatus.TabIndex = 8;
+            cmbStatus.SelectedIndexChanged += cmbStatus_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.Copy_of_CCP___SYSTEM;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1902, 1033);
+            Controls.Add(cmbStatus);
+            Controls.Add(cmbGender);
+            Controls.Add(deleteBtn);
+            Controls.Add(editBtn);
             Controls.Add(dischargeBtn);
             Controls.Add(addPatient);
             Controls.Add(panel1);
@@ -111,5 +162,9 @@
         private Panel panel1;
         private Panel addPatient;
         private Panel dischargeBtn;
+        private Panel editBtn;
+        private Panel deleteBtn;
+        private ComboBox cmbGender;
+        private ComboBox cmbStatus;
     }
 }

@@ -5,63 +5,45 @@ namespace PentaCare
 {
     public partial class Form1 : Form
     {
+        private DataSet sqlDS;
+
         public Form1()
         {
             InitializeComponent();
-            this.Size = new Size(1920, 1110);
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //textBox1.Text = "Search by Patient Name, ID...";
-            //textBox1.ForeColor = Color.Gray;
-
-            //// Attach events
-            //textBox1.Enter += RemoveText;
-            //textBox1.Leave += AddText;
-
             dataGridView1.Size = new Size(1463, 351);
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ScrollBars = ScrollBars.Both; // optional: adds scroll if needed
-
-
-
 
             string dbconnect = "server= 127.0.0.1; database=pentacare; uid=root; ";
             MySqlConnection conn = new MySqlConnection(dbconnect);
             MySqlCommand sqlcmd = new MySqlCommand();
 
             MySqlDataAdapter sqlDA = new MySqlDataAdapter();
-            DataSet sqlDS = new DataSet();
+            sqlDS = new DataSet();
 
-
-            // Step 2: Establish SQL Connection
             conn.Open();
 
-
-            // Step 3: Request Query
-
-            sqlcmd.CommandText = "SELECT p.PatientID, p.Name, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date, IFNULL(p.Discharge_Date, '') AS Discharge_Date " +
-                      "FROM patient AS p " +
-                       "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
+            sqlcmd.CommandText = "SELECT p.PatientID, p.Name, p.Gender, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
+                     "FROM patient AS p " +
+                     "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
                      "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
-
-
 
             sqlcmd.CommandType = CommandType.Text;
             sqlcmd.Connection = conn;
 
-            // Step 4: Execute SQL Command
-
             sqlDA.SelectCommand = sqlcmd;
-           
 
             sqlDA.Fill(sqlDS, "recordsfetch");
             dataGridView1.DataSource = sqlDS;
             dataGridView1.DataMember = "recordsfetch";
+            dataGridView1.Columns["Gender"].Visible = false;
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.Name = "Action";
@@ -70,12 +52,7 @@ namespace PentaCare
             btn.UseColumnTextForButtonValue = true;  // ✅ Same text for all buttons
             dataGridView1.Columns.Add(btn);
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
-
-
-            //Step 5: DQ
-
             conn.Close();
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -160,30 +137,277 @@ namespace PentaCare
             this.Hide();
             Form1 form = new Form1();
             form.Show();
-        
+
         }
-            //    string dbconnect = "server=127.0.0.1; database=pentacare; uid=root;";
-            //    using (MySqlConnection conn = new MySqlConnection(dbconnect))
-            //    {
-            //        conn.Open();
-            //        string query = "SELECT p.PatientID, p.Name, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
-            //              "FROM patient AS p " +
-            //               "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
-            //             "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
-            //        MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-            //        DataTable dt = new DataTable();
-            //        da.Fill(dt);
-            //        dataGridView1.DataSource = dt;
-            //        if (!dataGridView1.Columns.Contains("Action"))
-            //        {
-            //            DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-            //            btn.Name = "Action";
-            //            btn.HeaderText = "Action";
-            //            btn.Text = "View Lab Result";
-            //            btn.UseColumnTextForButtonValue = true;
-            //            dataGridView1.Columns.Add(btn);
-            //        }
-            //    }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No row selected to edit. Select Name to edit records ");
+                return;
+            }
+
+
+            dataGridView1.EndEdit();  // ← forces DGV to save current cell edit
+
+
+            int pID = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["PatientID"].Value);
+            string name = dataGridView1.SelectedRows[0].Cells["Name"].Value.ToString();
+            string status = dataGridView1.SelectedRows[0].Cells["Status"].Value.ToString();
+
+            // prevent editing DoctorID
+            // Check non-editable columns individually
+
+            int colIndex = dataGridView1.CurrentCell.ColumnIndex;
+
+            if (colIndex == 0)
+            {
+                MessageBox.Show("Patient ID cannot be edited.");
+                return;
+            }
+
+            if (colIndex == 3)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Room Assignment cannot be changed in this form.\nGo to Room Management to change assigned room?\n\nClick Yes to proceed.",
+                   "Doctor and Records",
+                   MessageBoxButtons.YesNo,
+                   MessageBoxIcon.Question
+             );
+
+                dataGridView1.CurrentCell.Value = ""; // Clear attempted edit
+
+                if (result == DialogResult.Yes)
+                {
+                    // papunta sa room management
+                }
+                return;
+            }
+
+            if (colIndex == 4)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Doctor Name cannot be edited.\nGo to Doctor and Records to change assigned doctor?\n\nClick Yes to proceed.",
+                   "Doctor and Records",
+                   MessageBoxButtons.YesNo,
+                   MessageBoxIcon.Question
+             );
+
+                dataGridView1.CurrentCell.Value = ""; // Clear attempted edit
+
+                if (result == DialogResult.Yes)
+                {
+                    DoctorandRecords drForm = new DoctorandRecords();
+                    drForm.Show();
+                    this.Hide();
+                }
+                return;
+            }
+
+            
+
+
+            dataGridView1.EndEdit();
+            try
+            {
+                string dbconnect = "server=127.0.0.1; database=pentacare; uid=root;";
+                MySqlConnection conn = new MySqlConnection(dbconnect);
+                MySqlCommand sqlcmd = new MySqlCommand();
+                MySqlDataAdapter sqlDA = new MySqlDataAdapter();
+                DataSet sqlDS = new DataSet();
+
+                conn.Open();
+
+                sqlcmd.CommandText = $"UPDATE patient " +
+                                     $"SET Name = '{name}', " +
+                                     $"Status = '{status}' " +
+                                     $"WHERE PatientID = {pID}";
+
+                sqlcmd.CommandType = CommandType.Text;
+                sqlcmd.Connection = conn;
+                sqlcmd.ExecuteNonQuery();
+
+                MessageBox.Show("Patient record updated successfully.");
+
+                // reload data
+                sqlcmd.CommandText = "SELECT p.PatientID, p.Name, p.Gender, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
+                     "FROM patient AS p " +
+                     "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
+                     "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
+
+                sqlDA.SelectCommand = sqlcmd;
+                sqlDS.Clear();
+                sqlDA.Fill(sqlDS, "recordsfetch");
+                dataGridView1.DataSource = sqlDS;
+                dataGridView1.DataMember = "recordsfetch";
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving changes: " + ex.Message);
+            }
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No row selected to delete.");
+                return;
+            }
+
+            int patientID = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["PatientID"].Value);
+
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this patient record?",
+                                                  "Confirm Deletion",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+                return;
+
+            try
+            {
+                string dbconnect = "server=127.0.0.1; database=pentacare; uid=root;";
+                MySqlConnection conn = new MySqlConnection(dbconnect);
+                MySqlCommand sqlcmd = new MySqlCommand();
+                MySqlDataAdapter sqlDA = new MySqlDataAdapter();
+                DataSet sqlDS = new DataSet();
+
+                conn.Open();
+
+                sqlcmd.CommandText = $"DELETE FROM patient WHERE PatientID = {patientID}";
+                sqlcmd.CommandType = CommandType.Text;
+                sqlcmd.Connection = conn;
+                sqlcmd.ExecuteNonQuery();
+
+                MessageBox.Show("Patient record deleted successfully.");
+
+                sqlcmd.CommandText = "SELECT p.PatientID, p.Name, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
+                                  "FROM patient AS p " +
+                                  "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
+                                  "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
+                sqlDA.SelectCommand = sqlcmd;
+                sqlDS.Clear();
+                sqlDA.Fill(sqlDS, "recordsfetch");
+                dataGridView1.DataSource = sqlDS;
+                dataGridView1.DataMember = "recordsfetch";
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting record: " + ex.Message);
+            }
+        }
+
+        private void cmbGender_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string dbconnect = "server=127.0.0.1; database=pentacare; uid=root;";
+            MySqlConnection conn = new MySqlConnection(dbconnect);
+
+            try
+            {
+                conn.Open();
+
+                string query = "SELECT p.PatientID, p.Name, p.Gender, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
+                               "FROM patient AS p " +
+                               "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
+                               "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
+
+                // Filter by gender
+                string selectedGender = cmbGender.SelectedItem.ToString();
+                if (selectedGender != "All")
+                {
+                    query += " WHERE p.Gender = '" + selectedGender + "'";
+                }
+
+                MySqlDataAdapter sqlDA = new MySqlDataAdapter(query, conn);
+                sqlDS = new DataSet();
+                sqlDA.Fill(sqlDS, "recordsfetch");
+
+                dataGridView1.DataSource = sqlDS;
+                dataGridView1.DataMember = "recordsfetch";
+
+                if (dataGridView1.Columns.Contains("Gender"))
+                    dataGridView1.Columns["Gender"].Visible = false;
+
+                // Add button column only if it doesn't exist
+                if (!dataGridView1.Columns.Contains("Action"))
+                {
+                    DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+                    btn.Name = "Action";
+                    btn.HeaderText = "Action";
+                    btn.Text = "View Lab Result";
+                    btn.UseColumnTextForButtonValue = true;
+                    dataGridView1.Columns.Add(btn);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
+        }
+
+        private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string dbconnect = "server=127.0.0.1; database=pentacare; uid=root;";
+            MySqlConnection conn = new MySqlConnection(dbconnect);
+
+            try
+            {
+                conn.Open();
+
+                string query = "SELECT p.PatientID, p.Name, p.Gender, r.Room_No, d.Doctor_Name, p.Status, p.Admission_Date " +
+                               "FROM patient AS p " +
+                               "LEFT JOIN room AS r ON p.RoomID = r.RoomID " +
+                               "LEFT JOIN doctor AS d ON p.DoctorID = d.DoctorID";
+
+                // Filter by gender
+                string selectedStatus = cmbStatus.SelectedItem.ToString();
+                if (selectedStatus != "All")
+                {
+                    query += " WHERE p.Status = '" + selectedStatus + "'";
+                }
+
+                MySqlDataAdapter sqlDA = new MySqlDataAdapter(query, conn);
+                sqlDS = new DataSet();
+                sqlDA.Fill(sqlDS, "recordsfetch");
+
+                dataGridView1.DataSource = sqlDS;
+                dataGridView1.DataMember = "recordsfetch";
+
+                if (dataGridView1.Columns.Contains("Gender"))
+                    dataGridView1.Columns["Gender"].Visible = false;
+
+                // Add button column only if it doesn't exist
+                if (!dataGridView1.Columns.Contains("Action"))
+                {
+                    DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+                    btn.Name = "Action";
+                    btn.HeaderText = "Action";
+                    btn.Text = "View Lab Result";
+                    btn.UseColumnTextForButtonValue = true;
+                    dataGridView1.Columns.Add(btn);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
+}
 

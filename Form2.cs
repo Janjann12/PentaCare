@@ -17,9 +17,11 @@ namespace PentaCare
             InitializeComponent();
         }
 
-        private void panel1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            DoctorandRecords doctorandRecords = new DoctorandRecords();
+            doctorandRecords.Show();
+            //
         }
     }
 }
